@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "status": "pass",
+  "message": null,
+  "tests": [
+    {
+      "name": "test_add",
+      "status": "pass"
+    },
+    {
+      "name": "test_sub",
+      "status": "pass"
+    },
+    {
+      "name": "test_mul",
+      "status": "pass"
+    }
+  ]
+}

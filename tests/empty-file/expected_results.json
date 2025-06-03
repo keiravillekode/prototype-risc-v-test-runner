@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "status": "error",
+  "message": "/usr/lib/gcc-cross/aarch64-linux-gnu/13/../../../../aarch64-linux-gnu/bin/ld: empty_file_test.o: in function `test_add':\n/opt/test-runner/tests/empty-file/empty_file_test.c:14:(.text+0x20): undefined reference to `add'\ncollect2: error: ld returned 1 exit status\nmake: *** [Makefile:22: tests] Error 1\n",
+  "tests": []
+}
