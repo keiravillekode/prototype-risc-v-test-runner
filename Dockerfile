@@ -1,6 +1,6 @@
 # Ubuntu does not package a 32-bit RISC-V Linux toolchain, so we fetch a
 # prebuilt riscv32 glibc cross-toolchain (which also bundles qemu-riscv32).
-FROM ubuntu:24.04 AS toolchain
+FROM ubuntu:24.04@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b AS toolchain
 
 ARG TOOLCHAIN_RELEASE=2026.06.06
 ARG TOOLCHAIN_ASSET=riscv32-glibc-ubuntu-24.04-gcc.tar.xz
@@ -36,7 +36,7 @@ RUN apt-get update \
         /opt/riscv/bin/riscv32-unknown-linux-gnu-gdb-add-index
 
 
-FROM ubuntu:24.04
+FROM ubuntu:24.04@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b
 
 # make + python3 drive the test build/parsing; the lib* packages are the host
 # shared libraries the prebuilt gcc binaries link against at runtime.
