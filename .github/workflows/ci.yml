@@ -27,7 +27,7 @@ jobs:
           context: .
           push: false
           load: true
-          tags: exercism/prototype-risc-v-test-runner
+          tags: exercism/risc-v-musl-test-runner
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

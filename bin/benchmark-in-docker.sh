@@ -27,7 +27,7 @@ required_tool hyperfine
 
 # Pre-build the Docker image
 if [ -z "${SKIP_DOCKER_BUILD}" ]; then
-  docker build --rm -t exercism/prototype-risc-v-test-runner .
+  docker build --rm -t exercism/risc-v-musl-test-runner .
 else
   echo "Skipping docker build because SKIP_DOCKER_BUILD is set."
 fi

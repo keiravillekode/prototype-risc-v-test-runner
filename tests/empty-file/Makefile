@@ -1,5 +1,5 @@
-AS = /opt/riscv/bin/riscv32-unknown-linux-gnu-as
-CC = /opt/riscv/bin/riscv32-unknown-linux-gnu-gcc
+AS = /opt/riscv/bin/riscv32-unknown-linux-musl-as
+CC = /opt/riscv/bin/riscv32-unknown-linux-musl-gcc
 
 CFLAGS = -g -Wall -Wextra -pedantic -Werror
 LDFLAGS =
