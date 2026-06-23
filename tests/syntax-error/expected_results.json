@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "fake.s: Assembler messages:\nfake.s:5: Error: unknown mnemonic `return' -- `return'\nmake: *** [Makefile:25: fake.o] Error 1\n",
+  "message": "fake.s: Assembler messages:\nfake.s:5: Error: unrecognized opcode `return'\nmake: *** [Makefile:25: fake.o] Error 1\n",
   "tests": []
 }

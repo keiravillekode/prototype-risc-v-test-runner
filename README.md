@@ -1,6 +1,6 @@
 # Prototype Exercism RISC-V Assembly Test Runner
 
-The Docker image to automatically run tests on 64 bit RISC-V Assembly solutions submitted to [Exercism].
+The Docker image to automatically run tests on 32 bit RISC-V Assembly solutions submitted to [Exercism].
 
 ## Getting started
 
