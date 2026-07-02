@@ -1,12 +1,11 @@
-AS = /opt/riscv/bin/riscv32-unknown-linux-musl-as
-CC = /opt/riscv/bin/riscv32-unknown-linux-musl-gcc
+CC = zig cc -target riscv32-linux-musl
 
 CFLAGS = -g -Wall -Wextra -pedantic -Werror
 LDFLAGS =
 
-ALL_LDFLAGS = -static -Wl,--fatal-warnings
+ALL_LDFLAGS = -static
 
-ALL_CFLAGS = -std=c99 -fPIE $(CFLAGS)
+ALL_CFLAGS = -std=c99 $(CFLAGS)
 ALL_LDFLAGS += $(LDFLAGS)
 
 C_OBJS = $(patsubst %.c,%.o,$(wildcard *.c))
@@ -19,10 +18,12 @@ all: tests
 	qemu-riscv32 ./$<
 
 tests: $(ALL_OBJS)
-	@$(CC) $(ALL_CFLAGS) $(ALL_LDFLAGS) -o $@ $(ALL_OBJS)
+	@$(CC) $(ALL_LDFLAGS) -o $@ $(ALL_OBJS)
 
+# Assemble through the C preprocessor so clang's integrated assembler accepts
+# the GAS-style /* */ comments used throughout the track.
 %.o: %.s
-	@$(AS) -o $@ $<
+	@$(CC) -x assembler-with-cpp -c -o $@ $<
 
 %.o: %.c
 	@$(CC_CMD)
