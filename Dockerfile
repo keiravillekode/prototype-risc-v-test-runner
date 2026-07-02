@@ -16,9 +16,6 @@ RUN apt-get update \
         -o /tmp/toolchain.tar.xz \
     && tar -xf /tmp/toolchain.tar.xz -C /opt \
     && rm /tmp/toolchain.tar.xz \
-    # The musl bundle omits the conventional dynamic-loader symlink that the
-    # ELF interpreter (/lib/ld-musl-riscv32.so.1) resolves to, so create it.
-    && ln -sf libc.so /opt/riscv/sysroot/lib/ld-musl-riscv32.so.1 \
     # Prune everything we never use (we only compile C, assemble, and link) to
     # keep the final image smaller: docs, the C++/LTO compiler backends, and
     # the non-C language drivers + bundled gdb.
@@ -35,7 +32,10 @@ RUN apt-get update \
         /opt/riscv/bin/riscv32-unknown-linux-musl-gfortran \
         /opt/riscv/bin/riscv32-unknown-linux-musl-lto-dump \
         /opt/riscv/bin/riscv32-unknown-linux-musl-gdb \
-        /opt/riscv/bin/riscv32-unknown-linux-musl-gdb-add-index
+        /opt/riscv/bin/riscv32-unknown-linux-musl-gdb-add-index \
+    # We link solutions with -static, so the target sysroot's shared libraries
+    # and dynamic loader are never used; drop them.
+    && find /opt/riscv/sysroot -name '*.so*' -delete
 
 
 FROM ubuntu:24.04@sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebcc41c7b
