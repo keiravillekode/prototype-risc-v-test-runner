@@ -26,6 +26,19 @@ solution_dir=$(realpath "${2%/}")
 output_dir=$(realpath "${3%/}")
 results_file="${output_dir}/results.json"
 
+# zig needs a writable global cache (it creates lock/manifest files even on
+# cache hits). The production harness mounts the image read-only with only /tmp
+# writable, so when the baked cache is not writable, copy it to /tmp once.
+# cp -a preserves mtimes, keeping the warmed musl/compiler_rt artifacts as cache
+# hits (no ~50 s rebuild).
+: "${ZIG_GLOBAL_CACHE_DIR:=/opt/zig-cache}"
+if ! ( : > "${ZIG_GLOBAL_CACHE_DIR}/.write-test" ) 2>/dev/null; then
+    [ -d /tmp/zig-global ] || cp -a "${ZIG_GLOBAL_CACHE_DIR}" /tmp/zig-global
+    export ZIG_GLOBAL_CACHE_DIR=/tmp/zig-global
+else
+    rm -f "${ZIG_GLOBAL_CACHE_DIR}/.write-test"
+fi
+
 cwd=$(pwd)
 test_file=$(echo "${slug}" | sed 's/-/_/g')_test.c
 cd "${solution_dir}" || exit

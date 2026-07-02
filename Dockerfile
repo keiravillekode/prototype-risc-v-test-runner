@@ -37,12 +37,12 @@ ENV ZIG_LOCAL_CACHE_DIR=/tmp/zig-cache
 # real solution build does not spend ~50 s compiling musl/compiler_rt. Building
 # and running a tiny static executable populates every cached artifact.
 RUN printf 'int main(void) { return 0; }\n' > /tmp/warm.c \
-    && printf '\t.text\n\t.globl warm\nwarm:\n\tret\n' > /tmp/warm.s \
+    && printf '\t.text\n\t.globl warm\nwarm:\n\tret\n' > /tmp/warm.S \
     && zig cc -target riscv32-linux-musl -std=c99 -c /tmp/warm.c -o /tmp/warm_c.o \
-    && zig cc -target riscv32-linux-musl -x assembler-with-cpp -c /tmp/warm.s -o /tmp/warm_s.o \
+    && zig cc -target riscv32-linux-musl -c /tmp/warm.S -o /tmp/warm_s.o \
     && zig cc -target riscv32-linux-musl -static -o /tmp/warm /tmp/warm_c.o /tmp/warm_s.o \
     && qemu-riscv32 /tmp/warm \
-    && rm -rf /tmp/warm.c /tmp/warm.s /tmp/warm_c.o /tmp/warm_s.o /tmp/warm "${ZIG_LOCAL_CACHE_DIR}"
+    && rm -rf /tmp/warm.c /tmp/warm.S /tmp/warm_c.o /tmp/warm_s.o /tmp/warm "${ZIG_LOCAL_CACHE_DIR}"
 
 WORKDIR /opt/test-runner
 COPY . .

@@ -1,6 +1,6 @@
 {
   "version": 2,
   "status": "error",
-  "message": "/opt/riscv/riscv32-unknown-linux-musl/bin/ld: empty_file_test.o: in function `test_add':\n/opt/test-runner/tests/empty-file/empty_file_test.c:14:(.text+0x30): undefined reference to `add'\ncollect2: error: ld returned 1 exit status\nmake: *** [Makefile:22: tests] Error 1\n",
+  "message": "ld.lld: error: undefined symbol: add\n>>> referenced by empty_file_test.c:10\n>>>               empty_file_test.o:(test_add)\nmake: *** [Makefile:21: tests] Error 1\n",
   "tests": []
 }
